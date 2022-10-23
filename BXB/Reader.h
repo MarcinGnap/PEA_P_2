@@ -17,5 +17,7 @@ public:
 	~Reader();
 	bool OpenIni();
 	int OpenTxt(std::string & sFilename);
+	int OpenTsp(std::string & sFilename);
+	int OpenAtsp(std::string & sFilename);
 };
 
