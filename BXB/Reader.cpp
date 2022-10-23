@@ -25,13 +25,7 @@ bool Reader::OpenIni() {
 		ifFileini >> sFilename;
 		ifFileini >> iRNumber;
 		ifFileini >> iOCost;
-		ifFileini >> iOptimalRouteSize;
 
-		iOptimalRoute = new int[iOptimalRouteSize];
-		for (int i = 0; i < iOptimalRouteSize; i++)
-		{
-			ifFileini >> iOptimalRoute[i];
-		}
 		/*
 		std::string sTemp;
 		std::getline(ifFileini, sFilename);
@@ -49,14 +43,14 @@ bool Reader::OpenIni() {
 }
 
 int Reader::OpenTxt(std::string & sFilename) {
-	std::cout << "\t Loading...\n";
+	std::cout << "Loading...\n";
 
 	std::fstream fFiletxt;
 	fFiletxt.open(sFilename, std::ios::in);
 	if (!fFiletxt.good())
 	{
 		this->sFilename = "Brak pliku";
-		std::cout << "\n Nie mozna wczytac pliku...";
+		std::cout << "Nie mozna wczytac pliku...";
 		return 0;
 	}
 
@@ -69,14 +63,14 @@ int Reader::OpenTxt(std::string & sFilename) {
 		iVertices = NULL;
 		iNOfVertices = 0;
 	}
-	std::cout << "\t TSP file opened...\n";
+	std::cout << "TSP file opened...\n";
 
 	this->sFilename = sFilename;
 	fFiletxt >> iNOfVertices;
 	iVertices = new int *[iNOfVertices];
 	int iLine = 0;
 
-	std::cout << "Number of Vertices: " << iNOfVertices << std::endl;
+	std::cout << "\nNumber of Vertices: " << iNOfVertices << std::endl << std::endl;
 
 	for (int i = 0; i < iNOfVertices; ++i) {
 		iVertices[i] = new int[iNOfVertices];
@@ -91,12 +85,12 @@ int Reader::OpenTxt(std::string & sFilename) {
 		}
 	}
 
-	std::cout << "\t Instance copied...\n";
+	std::cout << "Instance copied...\n";
 
 	fFiletxt.close();
 
 	if (iLine != iNOfVertices && iLine != iNOfVertices * 2) {
-		std::cout << "\nNiepoprawna ilosc danych...";
+		std::cout << "Niepoprawna ilosc danych...";
 		this->sFilename = "Brak pliku";
 		for (int i = 0; i < iNOfVertices; ++i) {
 			delete iVertices[i];
@@ -107,6 +101,6 @@ int Reader::OpenTxt(std::string & sFilename) {
 		return 1;
 	}
 
-	std::cout << "\n Wczytanie pliku przebieglo poprawnie\n";
+	std::cout << "Wczytanie pliku przebieglo poprawnie\n";
 	return 0;
 }
