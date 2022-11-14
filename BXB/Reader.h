@@ -20,4 +20,3 @@ public:
 	int OpenTsp(std::string & sFilename);
 	int OpenAtsp(std::string & sFilename);
 };
-

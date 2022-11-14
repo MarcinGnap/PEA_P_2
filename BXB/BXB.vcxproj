@@ -123,11 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BXB.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Reader.cpp" />
     <ClCompile Include="timeMeasurement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BXB.h" />
     <ClInclude Include="Reader.h" />
     <ClInclude Include="timeMeasurement.h" />
   </ItemGroup>
