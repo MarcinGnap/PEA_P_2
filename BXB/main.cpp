@@ -36,7 +36,6 @@ int main() {
 	outputFile << "Nazwa pliku: " << reader.sFilename << endl;
 	outputFile << "Powtórzenia algorytmu: " << reader.iRNumber << endl;
 	outputFile << "Optymalny koszt: " << reader.iOCost << endl;
-	outputFile << "Optymalna œcie¿ka: " << endl;
 	outputFile << "Otrzymany koszt: " << endl;
 
 
@@ -82,8 +81,16 @@ int main() {
 
 	}
 	llAvgTimefloat = llAvgTime / reader.iRNumber;
-	outputFile << "Œredni czas wykonywania algorytmu [ms]: " << llAvgTimefloat;
-	outputFile << "\nKoniec";
+	outputFile << "Œredni czas wykonywania algorytmu [ns]: " << llAvgTimefloat << endl;
+	outputFile << "Optymalna œcie¿ka: ";
+	Graph* myGraph = new Graph(reader.iNOfVertices);
+	myGraph->loadGraphFromFile(reader.iNOfVertices, reader.iVertices);
+	BXB* test = new BXB();
+	test->startAlgorithm(myGraph);
+	for (int i = 0; i < reader.iNOfVertices+1; i++) {
+		outputFile << test->resultPermut[i] << "-->";
+	}
+	outputFile << test->startVert << std::endl;
 	cout << "Maksymalny czas wykonywania algorytmu: " << llMaxTime << endl;
 	cout << "Minimalny czas wykonywania algorytmu: " << llMinTime << endl;
 	cout << "Sredni czas wykonywania algorytmu: " << llAvgTimefloat << endl;

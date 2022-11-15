@@ -4,9 +4,9 @@
 class BXB
 {
 	//brut force data
-	int matrixSize, startVert, minCostResult, activeCostOfPermut, currentSize;
+	int matrixSize, minCostResult, activeCostOfPermut, currentSize;
 	Graph* myGraph;
-	int* resultPermut, *permuTab;
+	int* permuTab;
 	bool* visited;
 
 	int* minimusFrom;
@@ -14,6 +14,9 @@ class BXB
 	int lowerBound;
 
 public:
+	int* resultPermut;
+	int startVert;
+
 	~BXB();
 	void brutForce(int v);
 	void startAlgorithm(Graph* newGraphData);
