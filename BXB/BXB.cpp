@@ -1,17 +1,15 @@
 #include "BXB.h"
 
-BXB::~BXB()
-{
+BXB::~BXB(){
 	delete[] resultPermut;
 	delete[] permuTab;
 	delete[] visited;
 	delete[] minimusFrom;
 }
 
-void BXB::brutForce(int v)
-{
+void BXB::brutForce(int v){
 	int u;
-	permuTab[currentSize++] = v;//permuTab jest zawsze tej samej wielkosci, current size to poprwane zapelnienie
+	permuTab[currentSize++] = v;//permuTab jest zawsze tej samej wielkosci, currentSize to poprwane zapelnienie
 	if (currentSize < matrixSize)
 	{
 		visited[v] = true;
@@ -21,13 +19,9 @@ void BXB::brutForce(int v)
 				lowerBound = (lowerBound - minimusFrom[v]) + myGraph->getValueOfEdge(v, u);//aktualizacja lowerBound
 				activeCostOfPermut += myGraph->getValueOfEdge(v, u);
 				if (lowerBound > upperBound) {
-					//pomin bo nic tu nie znajdziesz
-					//std::cout << "odcinam\n";
 				}
 				else {
-					if (true) { //activeCostOfPermut <= upperBound
-						//jesli znajdujemy sie w przedziale miedzy boundami to szukamy dalej
-						//std::cout << "rekurencja" << std::endl;
+					if (true) {
 						brutForce(u);	//rekurencja
 					}
 				}
@@ -49,19 +43,16 @@ void BXB::brutForce(int v)
 		}
 		activeCostOfPermut -= myGraph->getValueOfEdge(v, startVert);
 	}
-	currentSize--;//!!!!!!!!!cofamy siê w tablicy- wracamy poprawiac te ktore do tej pory byly ustalone
+	currentSize--;//cofamy siê w tablicy- wracamy poprawiac te ktore do tej pory byly ustalone
 }
 
-void BXB::startAlgorithm(Graph* newGraphData)
-{
+void BXB::startAlgorithm(Graph* newGraphData){
 	matrixSize = newGraphData->getNumbOfVerts();
 	resultPermut = new int[matrixSize];
 	permuTab = new int[matrixSize];
 	visited = new bool[matrixSize];
-	//W = new int* [n];
 	myGraph = newGraphData;
-	/*std::cout << "Drukuje dane wczytanego grafu:" << std::endl;
-	myGraph->printGraph();*/
+
 	for (int i = 0; i < matrixSize; i++)
 	{
 		visited[i] = false;
@@ -71,25 +62,21 @@ void BXB::startAlgorithm(Graph* newGraphData)
 	activeCostOfPermut = startVert = 0;
 
 	startMinimus();
-	upperBound = (1 << 28);//zaczyna zainicjowane jako bardzo duza liczba --nieskonczonosc
+	upperBound = (1 << 28);//zaczyna zainicjowane jako bardzo duza liczba
 	lowerBound = sumMinimus();//zaczyna jako suma najmniejszych wyjsc z kazdego jednego wierzcholka
 
 	brutForce(startVert);
-
-	//here printin
 }
 
-void BXB::printResult()
-{//sekcja wyswietlania
+void BXB::printResult(){
 	for (int i = 0; i < matrixSize; i++) std::cout << resultPermut[i] << "-->";
 	std::cout << startVert << std::endl;
 	std::cout << " Koszt = " << minCostResult << std::endl;
 }
 
-int BXB::findMinimumFor(int verticle)
-{
+int BXB::findMinimumFor(int verticle){
 	int tempMin = 99999;
-	//dla podanej wartosci wierzcholka wyznacz minimalnš wartosc wychodzšca OD niego
+	//dla podanej wartosci wierzcholka wyznacz minimalna wartosc wychodzqca od niego
 	for (int i = 0; i < matrixSize; i++) {//proste wyznaczanie minimum
 		int tempX = myGraph->getValueOfEdge(verticle, i);
 		if (tempX < tempMin && i != verticle) {
@@ -99,16 +86,14 @@ int BXB::findMinimumFor(int verticle)
 	return tempMin;
 }
 
-void BXB::startMinimus()
-{
+void BXB::startMinimus(){
 	minimusFrom = new int[matrixSize];
 	for (int j = 0; j < matrixSize; j++) {
 		minimusFrom[j] = findMinimumFor(j);
 	}
 }
 
-int BXB::sumMinimus()
-{
+int BXB::sumMinimus(){
 	int tempSum = 0;
 	for (int i = 0; i < matrixSize; i++) {
 		tempSum += minimusFrom[i];

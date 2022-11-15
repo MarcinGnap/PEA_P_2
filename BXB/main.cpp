@@ -24,20 +24,12 @@ int main() {
 	cout << "Ilosc wykonan: " << reader.iRNumber << endl;
 	cout << "Optymalny koszt: " << reader.iOCost << endl << endl;
 
-	/*for (int i = 0; i < reader.iOptimalRouteSize; i++) {
-		outputFile << reader.iOptimalRoute[i] << " ";
-	}
-	outputFile << ", ";
-	delete[] reader.iOptimalRoute;*/
-
-
 	reader.OpenTxt(reader.sFilename);
 
 	outputFile << "Nazwa pliku: " << reader.sFilename << endl;
 	outputFile << "Powtórzenia algorytmu: " << reader.iRNumber << endl;
 	outputFile << "Optymalny koszt: " << reader.iOCost << endl;
 	outputFile << "Otrzymany koszt: " << endl;
-
 
 	cout << "\n \nChecking input file...\n";
 	cout << reader.iNOfVertices << endl << endl;
