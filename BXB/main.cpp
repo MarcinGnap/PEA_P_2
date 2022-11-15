@@ -1,5 +1,7 @@
 #include "Reader.h"
 #include "timeMeasurement.h"
+#include "Graph.h"
+#include "BXB.h"
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -37,24 +39,53 @@ int main() {
 	outputFile << "Optymalna œcie¿ka: " << endl;
 	outputFile << "Otrzymany koszt: " << endl;
 
-	cout << "Calculating...\n";
 
+	cout << "\n \nChecking input file...\n";
+	cout << reader.iNOfVertices << endl << endl;
+	for (size_t n = 0; n < reader.iNOfVertices; n++){
+		for (size_t m = 0; m < reader.iNOfVertices; m++) {
+			cout << reader.iVertices[n][m] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << "Calculating...\n";
+	long long llMinTime = INT_MAX;
+	long long llMaxTime = 0;
 	for (int n = 0; n < reader.iRNumber; ++n) {
 		long long llTempTime = 0;
+		cout << "\nLoading Graph...\n";
+		Graph* myGraph = new Graph(reader.iNOfVertices);
+		myGraph->loadGraphFromFile(reader.iNOfVertices, reader.iVertices);
+		BXB* test = new BXB();
+
 		auto o1 = chrono::high_resolution_clock::now();
 
-		//BF.calculate(menu.iVertices, menu.iNOfVertices);
+		test->startAlgorithm(myGraph);
 
 		auto o2 = chrono::high_resolution_clock::now();
+		test->printResult();
+
 		tM.tMOutcome(o1, o2);
 		llTempTime = tM.tMTest(o1, o2);
+		if (llTempTime < llMinTime) {
+			llMinTime = llTempTime;
+		}
+		else if(llTempTime > llMaxTime){
+			llMaxTime = llTempTime;
+		}
 		outputFile << llTempTime << endl;
 		llAvgTime = llAvgTime + llTempTime;
+
+		cout << endl;
+		cout << endl;
+
 	}
 	llAvgTimefloat = llAvgTime / reader.iRNumber;
-	//outputFile << BF.iLowestCost + 1 << ", ";
 	outputFile << "Œredni czas wykonywania algorytmu [ms]: " << llAvgTimefloat;
 	outputFile << "\nKoniec";
+	cout << "Maksymalny czas wykonywania algorytmu: " << llMaxTime << endl;
+	cout << "Minimalny czas wykonywania algorytmu: " << llMinTime << endl;
 	cout << "Sredni czas wykonywania algorytmu: " << llAvgTimefloat << endl;
 	cout << "Done...\n";
 

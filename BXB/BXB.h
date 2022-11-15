@@ -1,21 +1,25 @@
 #pragma once
-#include <vector>
-
+#include "Graph.h"
+#include <iostream>
 class BXB
 {
+	//brut force data
+	int matrixSize, startVert, minCostResult, activeCostOfPermut, currentSize;
+	Graph* myGraph;
+	int* resultPermut, *permuTab;
+	bool* visited;
+
+	int* minimusFrom;
+	int upperBound;
+	int lowerBound;
+
 public:
-	BXB();
 	~BXB();
-	void calculate(int iRSize, int ** iMatrix);
+	void brutForce(int v);
+	void startAlgorithm(Graph* newGraphData);
+	void printResult();
 
-private:
-	struct Node{
-		int iValue, iImp;
-	};
-	int iCost, iMinCost, iMax, iSize;
-	bool * bVisited;
-	std::vector<int> vPath;
-	std::vector<int> vMinPath;
-	std::vector<Node> vQueue;
-
+	int findMinimumFor(int verticle);//zawsze sprawdza OD
+	void startMinimus();//do tablicy wpisuje minimalne wyjscia(OD) danego wierzcholka
+	int sumMinimus();//sumuje wszystkie wartosci z tablicy
 };

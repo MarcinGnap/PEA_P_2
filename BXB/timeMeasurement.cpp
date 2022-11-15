@@ -22,7 +22,7 @@ long long timeMeasurement::tMShort(chrono::high_resolution_clock::time_point o1,
 
 long long timeMeasurement::tMTest(chrono::high_resolution_clock::time_point o1, chrono::high_resolution_clock::time_point o2)
 {
-	chrono::milliseconds time_span = chrono::duration_cast<chrono::milliseconds> (o2 - o1);
+	chrono::nanoseconds time_span = chrono::duration_cast<chrono::nanoseconds> (o2 - o1);
 
 	return time_span.count();
 }
